@@ -11,13 +11,13 @@
 
 namespace Yarscript\Ciloquent\Database;
 
-use CodeIgniter\Config\BaseConfig;
+//use CodeIgniter\Config\BaseConfig;
 use InvalidArgumentException;
 
 /**
  * Class Config
  */
-class Config extends BaseConfig
+class Config
 {
     /**
      * Cache for instance of any connections that
@@ -25,7 +25,7 @@ class Config extends BaseConfig
      *
      * @var array
      */
-    protected static $instances = [];
+    protected static array $instances = [];
 
     /**
      * The main instance used to manage all of
@@ -33,7 +33,7 @@ class Config extends BaseConfig
      *
      * @var Database|null
      */
-    protected static $factory;
+    protected static ?Database $factory;
 
     /**
      * Creates the default
@@ -43,7 +43,7 @@ class Config extends BaseConfig
      *
      * @return BaseConnection
      */
-    public static function connect($group = null, bool $getShared = true)
+    public static function connect($group = null, bool $getShared = true): BaseConnection
     {
         // If a DB connection is passed in, just pass it back
         if ($group instanceof BaseConnection) {
@@ -96,9 +96,9 @@ class Config extends BaseConfig
      *
      * @param array|ConnectionInterface|string|null $group
      *
-     * @return Forge
+     * @return object
      */
-    public static function forge($group = null)
+    public static function forge($group = null): object
     {
         $db = static::connect($group);
 
@@ -110,7 +110,7 @@ class Config extends BaseConfig
      *
      * @param array|string|null $group
      *
-     * @return BaseUtils
+     * @return object
      */
     public static function utils($group = null)
     {
@@ -124,7 +124,7 @@ class Config extends BaseConfig
      *
      * @return Seeder
      */
-    public static function seeder(?string $group = null)
+    public static function seeder(?string $group = null): Seeder
     {
         $config = config('Database');
 
