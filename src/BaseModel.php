@@ -1011,7 +1011,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function onlyDeleted()
+    public function onlyDeleted(): self
     {
         $this->tempUseSoftDeletes = false;
         $this->doOnlyDeleted();
@@ -1052,7 +1052,7 @@ abstract class BaseModel
      *
      * @return array<string,string>
      */
-    public function errors(bool $forceDB = false)
+    public function errors(bool $forceDB = false): ?array
     {
         // Do we have validation errors?
         if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors())) {
@@ -1074,22 +1074,22 @@ abstract class BaseModel
      *
      * @return array|null
      */
-    public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0)
-    {
-        $pager = Services::pager(null, null, false);
-
-        if ($segment) {
-            $pager->setSegment($segment);
-        }
-
-        $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
-        // Store it in the Pager library, so it can be paginated in the views.
-        $this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
-        $perPage     = $this->pager->getPerPage($group);
-        $offset      = ($pager->getCurrentPage($group) - 1) * $perPage;
-
-        return $this->findAll($perPage, $offset);
-    }
+//    public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0): ?array
+//    {
+//        $pager = Services::pager(null, null, false);
+//
+//        if ($segment) {
+//            $pager->setSegment($segment);
+//        }
+//
+//        $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
+//        // Store it in the Pager library, so it can be paginated in the views.
+//        $this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
+//        $perPage     = $this->pager->getPerPage($group);
+//        $offset      = ($pager->getCurrentPage($group) - 1) * $perPage;
+//
+//        return $this->findAll($perPage, $offset);
+//    }
 
     /**
      * It could be used when you have to change default or override current allowed fields.
@@ -1098,7 +1098,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function setAllowedFields(array $allowedFields)
+    public function setAllowedFields(array $allowedFields): self
     {
         $this->allowedFields = $allowedFields;
 
@@ -1113,7 +1113,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function protect(bool $protect = true)
+    public function protect(bool $protect = true): self
     {
         $this->protectFields = $protect;
 
@@ -1236,7 +1236,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function skipValidation(bool $skip = true)
+    public function skipValidation(bool $skip = true): self
     {
         $this->skipValidation = $skip;
 
@@ -1251,7 +1251,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function setValidationMessages(array $validationMessages)
+    public function setValidationMessages(array $validationMessages): self
     {
         $this->validationMessages = $validationMessages;
 
@@ -1267,7 +1267,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function setValidationMessage(string $field, array $fieldMessages)
+    public function setValidationMessage(string $field, array $fieldMessages): self
     {
         $this->validationMessages[$field] = $fieldMessages;
 
@@ -1282,7 +1282,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function setValidationRules(array $validationRules)
+    public function setValidationRules(array $validationRules): self
     {
         $this->validationRules = $validationRules;
 
@@ -1298,7 +1298,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function setValidationRule(string $field, $fieldRules)
+    public function setValidationRule(string $field, $fieldRules): self
     {
         $this->validationRules[$field] = $fieldRules;
 
@@ -1313,7 +1313,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function cleanRules(bool $choice = false)
+    public function cleanRules(bool $choice = false): self
     {
         $this->cleanValidationRules = $choice;
 
@@ -1415,7 +1415,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function allowCallbacks(bool $val = true)
+    public function allowCallbacks(bool $val = true): self
     {
         $this->tempAllowCallbacks = $val;
 
@@ -1484,7 +1484,7 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function asObject(string $class = 'object')
+    public function asObject(string $class = 'object'): self
     {
         $this->tempReturnType = $class;
 
