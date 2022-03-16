@@ -40,7 +40,7 @@ class Connection extends BaseConnection
      *
      * @var bool
      */
-    public $deleteHack = true;
+    public bool $deleteHack = true;
 
     /**
      * Identifier escape character
