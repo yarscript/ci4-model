@@ -1202,11 +1202,11 @@ abstract class BaseModel
      *  - 'datetime' - Stores the data in the SQL datetime format
      *  - 'date'     - Stores the date (only) in the SQL date format.
      *
-     * @param \DateTime $value value
+     * @param Time $value value
      *
      * @return int|string
      */
-    protected function timeToDate(\DateTime $value)
+    protected function timeToDate(Time $value)
     {
         switch ($this->dateFormat) {
             case 'datetime':
