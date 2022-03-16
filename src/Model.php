@@ -13,17 +13,16 @@ namespace Yarscript\Ciloquent;
 
 use BadMethodCallException;
 use Closure;
-use Yarscript\Database\BaseBuilder;
-use Yarscript\Database\BaseConnection;
-use Yarscript\Database\BaseResult;
-use Yarscript\Database\ConnectionInterface;
-use Yarscript\Database\Exceptions\DatabaseException;
-use Yarscript\Database\Exceptions\DataException;
-use Yarscript\Database\Query;
-use Yarscript\Exceptions\ModelException;
-use Yarscript\I18n\Time;
-use Yarscript\Validation\ValidationInterface;
-use Config\Database;
+use Yarscript\Ciloquent\Database\BaseBuilder;
+use Yarscript\Ciloquent\Database\BaseConnection;
+use Yarscript\Ciloquent\Database\BaseResult;
+use Yarscript\Ciloquent\Database\ConnectionInterface;
+use Yarscript\Ciloquent\Database\Exceptions\DatabaseException;
+use Yarscript\Ciloquent\Database\Exceptions\DataException;
+use Yarscript\Ciloquent\Database\Query;
+use Yarscript\Ciloquent\Database\I18n\Time;
+use Yarscript\Ciloquent\Database\Validation\ValidationInterface;
+use Yarscript\Ciloquent\Database\Config as Database;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -512,7 +511,7 @@ class Model extends BaseModel
     /**
      * Provides a shared instance of the Query Builder.
      *
-     * @throws ModelException
+     * @throws BaseException
      *
      * @return BaseBuilder
      */
@@ -532,7 +531,7 @@ class Model extends BaseModel
         // so we don't have overly convoluted code,
         // and future features are likely to require them.
         if (empty($this->primaryKey)) {
-            throw ModelException::forNoPrimaryKey(static::class);
+            throw BaseException::forNoPrimaryKey(static::class);
         }
 
         $table = empty($table) ? $this->table : $table;
