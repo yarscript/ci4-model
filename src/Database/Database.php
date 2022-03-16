@@ -29,7 +29,7 @@ class Database
      *
      * @var array
      */
-    protected $connections = [];
+    protected array $connections = [];
 
     /**
      * Parses the connection binds and returns an instance of the driver

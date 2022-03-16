@@ -52,7 +52,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $DSN;
+    protected string $DSN;
 
     /**
      * Database port
@@ -66,7 +66,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $hostname;
+    protected string $hostname;
 
     /**
      * Username

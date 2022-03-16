@@ -56,7 +56,7 @@ class Connection extends BaseConnection
      *
      * @var MySQLi
      */
-    public $mysqli;
+    public MySQLi $mysqli;
 
     /**
      * MySQLi constant
@@ -67,14 +67,14 @@ class Connection extends BaseConnection
      *
      * @var int
      */
-    public $resultMode = MYSQLI_STORE_RESULT;
+    public int $resultMode = MYSQLI_STORE_RESULT;
 
     /**
      * Connect to the database.
      *
+     * @return false|\MySQLi
      * @throws DatabaseException
      *
-     * @return mixed
      */
     public function connect(bool $persistent = false)
     {
