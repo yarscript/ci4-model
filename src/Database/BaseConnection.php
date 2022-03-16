@@ -328,7 +328,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $queryClass = 'CodeIgniter\\Database\\Query';
+    protected $queryClass = 'Yarscript\\Ciloquent\\Database\\Query';
 
     /**
      * Saves our connection settings.
@@ -1510,7 +1510,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $sql
      */
-    public function isWriteType($sql): bool
+    public function isWriteType(string $sql): bool
     {
         return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
     }

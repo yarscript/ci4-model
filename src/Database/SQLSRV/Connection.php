@@ -524,9 +524,9 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param mixed $sql
+     * @param string $sql
      */
-    public function isWriteType($sql): bool
+    public function isWriteType(string $sql): bool
     {
         if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql)) {
             return true;

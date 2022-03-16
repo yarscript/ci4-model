@@ -293,7 +293,7 @@ abstract class BaseModel
          * @var \Yarscript\Ciloquent\ValidationInterface $validation
          */
 //        $validation       = $validation ?? Services::validation(null, false);
-        $this->validation = $validation;
+//        $this->validation = $validation;
 
         $this->initialize();
     }

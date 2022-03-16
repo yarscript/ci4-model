@@ -152,5 +152,5 @@ interface ConnectionInterface
      *
      * @param string $sql
      */
-    public function isWriteType($sql): bool;
+    public function isWriteType(string $sql): bool;
 }
