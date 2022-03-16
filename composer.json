@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Yarscript\\Model\\": "src/"
+      "Yarscript\\Ciloquent\\": "src/"
     }
   }
 }
