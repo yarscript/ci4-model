@@ -126,7 +126,7 @@ class Database
         $class = $driver . '\\' . $class;
 
         if (strpos($driver, '\\') === false) {
-            $class = "CodeIgniter\\Database\\$class";
+            $class = "Yarscript\\Ciloquent\\Database\\$class";
         }
 
         return new $class($argument);
