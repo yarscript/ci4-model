@@ -360,8 +360,6 @@ class Model extends BaseModel
      * Permanently deletes all rows that have been marked as deleted
      * through soft deletes (deleted = 1)
      * This methods works only with dbCalls
-     *
-     * @return bool|mixed
      */
     protected function doPurgeDeleted()
     {
