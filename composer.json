@@ -1,5 +1,5 @@
 {
-  "name": "yarscript/c4model",
+  "name": "yarscript/ciloquent",
   "description": "CI 4 Model component",
   "license": "GPL-3.0+",
   "minimum-stability": "dev",
@@ -14,7 +14,7 @@
     "yarscript",
     "model"
   ],
-  "homepage": "https://github.com/yarscript/ci4-model",
+  "homepage": "https://github.com/yarscript/ciloquent",
   "require": {
     "php": "^7.4 || ~8.0.0",
     "ext-intl": "*",
