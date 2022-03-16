@@ -26,7 +26,7 @@ class Connection extends BaseConnection
      *
      * @var string
      */
-    public $DBDriver = 'Postgre';
+    public string $DBDriver = 'Postgre';
 
     /**
      * Database schema

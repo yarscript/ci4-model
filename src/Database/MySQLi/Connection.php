@@ -29,7 +29,7 @@ class Connection extends BaseConnection
      *
      * @var string
      */
-    public $DBDriver = 'MySQLi';
+    public string $DBDriver = 'MySQLi';
 
     /**
      * DELETE hack flag

@@ -26,14 +26,14 @@ class Connection extends BaseConnection
      *
      * @var string
      */
-    public $DBDriver = 'SQLSRV';
+    public string $DBDriver = 'SQLSRV';
 
     /**
      * Database name
      *
      * @var string
      */
-    public $database;
+    public string $database;
 
     /**
      * Scrollable flag

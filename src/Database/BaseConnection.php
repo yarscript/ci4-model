@@ -73,28 +73,28 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $username;
+    protected string $username;
 
     /**
      * Password
      *
      * @var string
      */
-    protected $password;
+    protected string $password;
 
     /**
      * Database name
      *
      * @var string
      */
-    protected $database;
+    protected string $database;
 
     /**
      * Database driver
      *
      * @var string
      */
-    protected $DBDriver = 'MySQLi';
+    protected string $DBDriver = 'MySQLi';
 
     /**
      * Sub-driver
@@ -103,21 +103,23 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $subdriver;
+    protected string $subdriver;
+
+
 
     /**
      * Table prefix
      *
      * @var string
      */
-    protected $DBPrefix = '';
+    protected string $DBPrefix = '';
 
     /**
      * Persistent connection flag
      *
      * @var bool
      */
-    protected $pConnect = false;
+    protected bool $pConnect = false;
 
     /**
      * Debug flag
@@ -126,28 +128,28 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $DBDebug = false;
+    protected bool $DBDebug = false;
 
     /**
      * Character set
      *
      * @var string
      */
-    protected $charset = 'utf8';
+    protected string $charset = 'utf8';
 
     /**
      * Collation
      *
      * @var string
      */
-    protected $DBCollat = 'utf8_general_ci';
+    protected string $DBCollat = 'utf8_general_ci';
 
     /**
      * Swap Prefix
      *
      * @var string
      */
-    protected $swapPre = '';
+    protected string $swapPre = '';
 
     /**
      * Encryption flag/data
@@ -161,7 +163,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $compress = false;
+    protected bool $compress = false;
 
     /**
      * Strict ON flag
@@ -170,14 +172,14 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $strictOn;
+    protected bool $strictOn;
 
     /**
      * Settings for a failover connection.
      *
      * @var array
      */
-    protected $failover = [];
+    protected array $failover = [];
 
     /**
      * The last query object that was executed
@@ -206,7 +208,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    public $protectIdentifiers = true;
+    public bool $protectIdentifiers = true;
 
     /**
      * List of reserved identifiers
@@ -215,7 +217,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var array
      */
-    protected $reservedIdentifiers = ['*'];
+    protected array $reservedIdentifiers = ['*'];
 
     /**
      * Identifier escape character
@@ -229,14 +231,14 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    public $likeEscapeStr = " ESCAPE '%s' ";
+    public string $likeEscapeStr = " ESCAPE '%s' ";
 
     /**
      * ESCAPE character
      *
      * @var string
      */
-    public $likeEscapeChar = '!';
+    public string $likeEscapeChar = '!';
 
     /**
      * RegExp used to escape identifiers
