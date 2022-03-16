@@ -20,8 +20,6 @@ use Yarscript\Ciloquent\Database\ConnectionInterface;
 use Yarscript\Ciloquent\Database\Exceptions\DatabaseException;
 use Yarscript\Ciloquent\Database\Exceptions\DataException;
 use Yarscript\Ciloquent\Database\Query;
-use Yarscript\Ciloquent\Database\I18n\Time;
-use Yarscript\Ciloquent\Database\Validation\ValidationInterface;
 use Yarscript\Ciloquent\Database\Config as Database;
 use ReflectionClass;
 use ReflectionException;
@@ -48,28 +46,28 @@ class Model extends BaseModel
      *
      * @var string
      */
-    protected $table;
+    protected string $table;
 
     /**
      * The table's primary key.
      *
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected string $primaryKey = 'id';
 
     /**
      * Whether primary key uses auto increment.
      *
      * @var bool
      */
-    protected $useAutoIncrement = true;
+    protected bool $useAutoIncrement = true;
 
     /**
      * Query Builder object
      *
      * @var BaseBuilder|null
      */
-    protected $builder;
+    protected ?BaseBuilder $builder;
 
     /**
      * Holds information passed in via 'set'
@@ -78,7 +76,7 @@ class Model extends BaseModel
      *
      * @var array
      */
-    protected $tempData = [];
+    protected array $tempData = [];
 
     /**
      * Escape array that maps usage of escape
@@ -86,7 +84,7 @@ class Model extends BaseModel
      *
      * @var array
      */
-    protected $escape = [];
+    protected array $escape = [];
 
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
@@ -278,7 +276,7 @@ class Model extends BaseModel
      * @param array|int|string|null $id
      * @param array|null            $data
      */
-    protected function doUpdate($id = null, $data = null): bool
+    protected function doUpdate($id = null, array $data = null): bool
     {
         $escape       = $this->escape;
         $this->escape = [];

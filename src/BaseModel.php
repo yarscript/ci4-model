@@ -16,12 +16,12 @@ use Yarscript\Ciloquent\Database\BaseConnection;
 use Yarscript\Ciloquent\Database\BaseResult;
 use Yarscript\Ciloquent\Database\Exceptions\DatabaseException;
 use Yarscript\Ciloquent\Database\Exceptions\DataException;
-use CodeIgniter\Exceptions\ModelException;
-use CodeIgniter\I18n\Time;
+//use Yarscript\Ciloquent\Exceptions\ModelException;
+//use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
-use CodeIgniter\Validation\Validation;
-use CodeIgniter\Validation\ValidationInterface;
-use Config\Services;
+//use CodeIgniter\Validation\Validation;
+//use CodeIgniter\Validation\ValidationInterface;
+//use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -65,7 +65,7 @@ abstract class BaseModel
      *
      * @var string
      */
-    protected $DBGroup;
+    protected string $DBGroup;
 
     /**
      * The format that the results should be returned as.
@@ -73,7 +73,7 @@ abstract class BaseModel
      *
      * @var string
      */
-    protected $returnType = 'array';
+    protected string $returnType = 'array';
 
     /**
      * If this model should use "softDeletes" and
@@ -82,7 +82,7 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $useSoftDeletes = false;
+    protected bool $useSoftDeletes = false;
 
     /**
      * An array of field names that are allowed
@@ -90,7 +90,7 @@ abstract class BaseModel
      *
      * @var array
      */
-    protected $allowedFields = [];
+    protected array $allowedFields = [];
 
     /**
      * If true, will set created_at, and updated_at
@@ -98,7 +98,7 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $useTimestamps = false;
+    protected bool $useTimestamps = false;
 
     /**
      * The type of column that created_at and updated_at
@@ -108,21 +108,21 @@ abstract class BaseModel
      *
      * @var string
      */
-    protected $dateFormat = 'datetime';
+    protected string $dateFormat = 'datetime';
 
     /**
      * The column used for insert timestamps
      *
      * @var string
      */
-    protected $createdField = 'created_at';
+    protected string $createdField = 'created_at';
 
     /**
      * The column used for update timestamps
      *
      * @var string
      */
-    protected $updatedField = 'updated_at';
+    protected string $updatedField = 'updated_at';
 
     /**
      * Used by withDeleted to override the
@@ -130,14 +130,14 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $tempUseSoftDeletes;
+    protected bool $tempUseSoftDeletes;
 
     /**
      * The column used to save soft delete state
      *
      * @var string
      */
-    protected $deletedField = 'deleted_at';
+    protected string $deletedField = 'deleted_at';
 
     /**
      * Used by asArray and asObject to provide
@@ -145,7 +145,7 @@ abstract class BaseModel
      *
      * @var string
      */
-    protected $tempReturnType;
+    protected string $tempReturnType;
 
     /**
      * Whether we should limit fields in inserts
@@ -153,14 +153,14 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $protectFields = true;
+    protected bool $protectFields = true;
 
     /**
      * Database Connection
      *
      * @var BaseConnection
      */
-    protected $db;
+    protected BaseConnection $db;
 
     /**
      * Rules used to validate data in insert, update, and save methods.
@@ -177,7 +177,7 @@ abstract class BaseModel
      *
      * @var array
      */
-    protected $validationMessages = [];
+    protected array $validationMessages = [];
 
     /**
      * Skip the model's validation. Used in conjunction with skipValidation()
@@ -185,7 +185,7 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $skipValidation = false;
+    protected bool $skipValidation = false;
 
     /**
      * Whether rules should be removed that do not exist
@@ -193,7 +193,7 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $cleanValidationRules = true;
+    protected bool $cleanValidationRules = true;
 
     /**
      * Our validator instance.
@@ -220,7 +220,7 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $allowCallbacks = true;
+    protected bool $allowCallbacks = true;
 
     /**
      * Used by allowCallbacks() to override the
@@ -228,64 +228,67 @@ abstract class BaseModel
      *
      * @var bool
      */
-    protected $tempAllowCallbacks;
+    protected bool $tempAllowCallbacks;
 
     /**
      * Callbacks for beforeInsert
      *
      * @var array
      */
-    protected $beforeInsert = [];
+    protected array $beforeInsert = [];
 
     /**
      * Callbacks for afterInsert
      *
      * @var array
      */
-    protected $afterInsert = [];
+    protected array $afterInsert = [];
 
     /**
      * Callbacks for beforeUpdate
      *
      * @var array
      */
-    protected $beforeUpdate = [];
+    protected array $beforeUpdate = [];
 
     /**
      * Callbacks for afterUpdate
      *
      * @var array
      */
-    protected $afterUpdate = [];
+    protected array $afterUpdate = [];
 
     /**
      * Callbacks for beforeFind
      *
      * @var array
      */
-    protected $beforeFind = [];
+    protected array $beforeFind = [];
 
     /**
      * Callbacks for afterFind
      *
      * @var array
      */
-    protected $afterFind = [];
+    protected array $afterFind = [];
 
     /**
      * Callbacks for beforeDelete
      *
      * @var array
      */
-    protected $beforeDelete = [];
+    protected array $beforeDelete = [];
 
     /**
      * Callbacks for afterDelete
      *
      * @var array
      */
-    protected $afterDelete = [];
+    protected array $afterDelete = [];
 
+    /**
+     * @param \Yarscript\Ciloquent\ValidationInterface|null $validation
+     */
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -293,9 +296,9 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation $validation
+         * @var \Yarscript\Ciloquent\ValidationInterface $validation
          */
-        $validation       = $validation ?? Services::validation(null, false);
+//        $validation       = $validation ?? Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();
@@ -330,7 +333,7 @@ abstract class BaseModel
      *
      * @return array|null The resulting row of data, or null if no data found.
      */
-    abstract protected function doFindColumn(string $columnName);
+    abstract protected function doFindColumn(string $columnName): ?array;
 
     /**
      * Fetches all results, while optionally limiting them.
@@ -341,7 +344,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    abstract protected function doFindAll(int $limit = 0, int $offset = 0);
+    abstract protected function doFindAll(int $limit = 0, int $offset = 0): array;
 
     /**
      * Returns the first row of the result set.
@@ -381,7 +384,7 @@ abstract class BaseModel
      * @param array|int|string|null $id   ID
      * @param array|null            $data Data
      */
-    abstract protected function doUpdate($id = null, $data = null): bool;
+    abstract protected function doUpdate($id = null, ?array $data = null): bool;
 
     /**
      * Compiles an update and runs the query
@@ -444,7 +447,7 @@ abstract class BaseModel
      *
      * @return array|null
      */
-    abstract protected function doErrors();
+    abstract protected function doErrors(): ?array;
 
     /**
      * Returns the id value for the data array or object
@@ -545,7 +548,7 @@ abstract class BaseModel
      *
      * @return array|null The resulting row of data, or null if no data found.
      */
-    public function findColumn(string $columnName)
+    public function findColumn(string $columnName): ?array
     {
         if (strpos($columnName, ',') !== false) {
             throw DataException::forFindColumnHaveMultipleColumns();
@@ -564,7 +567,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findAll(int $limit = 0, int $offset = 0)
+    public function findAll(int $limit = 0, int $offset = 0): array
     {
         if ($this->tempAllowCallbacks) {
             // Call the before event and check for a return
