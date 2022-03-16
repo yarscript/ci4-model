@@ -245,7 +245,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var array
      */
-    protected $pregEscapeChar = [];
+    protected array $pregEscapeChar = [];
 
     /**
      * Holds previously looked up data
@@ -253,21 +253,21 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var array
      */
-    public $dataCache = [];
+    public array $dataCache = [];
 
     /**
      * Microtime when connection was made
      *
      * @var float
      */
-    protected $connectTime = 0.0;
+    protected float $connectTime = 0.0;
 
     /**
      * How long it took to establish connection.
      *
      * @var float
      */
-    protected $connectDuration = 0.0;
+    protected float $connectDuration = 0.0;
 
     /**
      * If true, no queries will actually be
@@ -275,28 +275,28 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $pretend = false;
+    protected bool $pretend = false;
 
     /**
      * Transaction enabled flag
      *
      * @var bool
      */
-    public $transEnabled = true;
+    public bool $transEnabled = true;
 
     /**
      * Strict transaction mode flag
      *
      * @var bool
      */
-    public $transStrict = true;
+    public bool $transStrict = true;
 
     /**
      * Transaction depth level
      *
      * @var int
      */
-    protected $transDepth = 0;
+    protected int $transDepth = 0;
 
     /**
      * Transaction status flag
@@ -305,7 +305,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $transStatus = true;
+    protected bool $transStatus = true;
 
     /**
      * Transaction failure flag
@@ -314,14 +314,14 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $transFailure = false;
+    protected bool $transFailure = false;
 
     /**
      * Array of table aliases.
      *
      * @var array
      */
-    protected $aliasedTables = [];
+    protected array $aliasedTables = [];
 
     /**
      * Query Class
@@ -529,7 +529,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return $this
      */
-    public function setAliasedTables(array $aliases)
+    public function setAliasedTables(array $aliases): self
     {
         $this->aliasedTables = $aliases;
 
@@ -541,7 +541,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return $this
      */
-    public function addTableAlias(string $table)
+    public function addTableAlias(string $table): self
     {
         if (! in_array($table, $this->aliasedTables, true)) {
             $this->aliasedTables[] = $table;
@@ -696,7 +696,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return $this
      */
-    public function transStrict(bool $mode = true)
+    public function transStrict(bool $mode = true): self
     {
         $this->transStrict = $mode;
 

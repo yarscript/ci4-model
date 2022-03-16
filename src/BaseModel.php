@@ -194,7 +194,7 @@ abstract class BaseModel
      *
      * @var Validation
      */
-    protected $validation;
+    protected Validation $validation;
 
     /*
      * Callbacks.
