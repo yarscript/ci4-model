@@ -2,7 +2,7 @@
   "name": "yarscript/ciloquent",
   "description": "CI 4 Model component",
   "license": "GPL-3.0+",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "authors": [
     {
       "name": "Yaroslav Shportko",
