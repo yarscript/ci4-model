@@ -16,12 +16,6 @@ use Yarscript\Ciloquent\Database\BaseConnection;
 use Yarscript\Ciloquent\Database\BaseResult;
 use Yarscript\Ciloquent\Database\Exceptions\DatabaseException;
 use Yarscript\Ciloquent\Database\Exceptions\DataException;
-//use Yarscript\Ciloquent\Exceptions\ModelException;
-//use CodeIgniter\I18n\Time;
-use CodeIgniter\Pager\Pager;
-//use CodeIgniter\Validation\Validation;
-//use CodeIgniter\Validation\ValidationInterface;
-//use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -50,7 +44,7 @@ abstract class BaseModel
      *
      * @var Pager
      */
-    public $pager;
+    public Pager $pager;
 
     /**
      * Last insert ID
@@ -1208,11 +1202,11 @@ abstract class BaseModel
      *  - 'datetime' - Stores the data in the SQL datetime format
      *  - 'date'     - Stores the date (only) in the SQL date format.
      *
-     * @param Time $value value
+     * @param \DateTime $value value
      *
      * @return int|string
      */
-    protected function timeToDate(Time $value)
+    protected function timeToDate(\DateTime $value)
     {
         switch ($this->dateFormat) {
             case 'datetime':
