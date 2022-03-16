@@ -16,7 +16,8 @@
   ],
   "homepage": "https://github.com/yarscript/ci4-model",
   "require": {
-    "php": "^7.4 || ~8.0.0"
+    "php": "^7.4 || ~8.0.0",
+    "ext-intl": "*"
   },
   "autoload": {
     "psr-4": {

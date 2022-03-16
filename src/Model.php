@@ -105,7 +105,7 @@ class Model extends BaseModel
      *
      * @return $this
      */
-    public function setTable(string $table)
+    public function setTable(string $table): self
     {
         $this->table = $table;
 
@@ -153,7 +153,7 @@ class Model extends BaseModel
      *
      * @return array|null The resulting row of data, or null if no data found.
      */
-    protected function doFindColumn(string $columnName)
+    protected function doFindColumn(string $columnName): array
     {
         return $this->select($columnName)->asArray()->find();
     }
@@ -168,7 +168,7 @@ class Model extends BaseModel
      *
      * @return array
      */
-    protected function doFindAll(int $limit = 0, int $offset = 0)
+    protected function doFindAll(int $limit = 0, int $offset = 0): array
     {
         $builder = $this->builder();
 
@@ -217,12 +217,12 @@ class Model extends BaseModel
      */
     protected function doInsert(array $data)
     {
-        $escape       = $this->escape;
+        $escape = $this->escape;
         $this->escape = [];
 
         // Require non empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
+        if (!$this->useAutoIncrement && empty($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
@@ -237,7 +237,7 @@ class Model extends BaseModel
 
         // If insertion succeeded then save the insert ID
         if ($result) {
-            $this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
+            $this->insertID = !$this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
         }
 
         return $result;
@@ -260,7 +260,7 @@ class Model extends BaseModel
             foreach ($set as $row) {
                 // Require non empty primaryKey when
                 // not using auto-increment feature
-                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+                if (!$this->useAutoIncrement && empty($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
             }
@@ -278,7 +278,7 @@ class Model extends BaseModel
      */
     protected function doUpdate($id = null, array $data = null): bool
     {
-        $escape       = $this->escape;
+        $escape = $this->escape;
         $this->escape = [];
 
         $builder = $this->builder();
@@ -304,9 +304,9 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
+     * @return false|int|string[] Number of rows affected or FALSE on failure
      * @throws DatabaseException
      *
-     * @return mixed Number of rows affected or FALSE on failure
      */
     protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
@@ -321,9 +321,9 @@ class Model extends BaseModel
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
+     * @return bool|string
      * @throws DatabaseException
      *
-     * @return bool|string
      */
     protected function doDelete($id = null, bool $purge = false)
     {
@@ -333,7 +333,7 @@ class Model extends BaseModel
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 
-        if ($this->useSoftDeletes && ! $purge) {
+        if ($this->useSoftDeletes && !$purge) {
             if (empty($builder->getCompiledQBWhere())) {
                 if (CI_DEBUG) {
                     throw new DatabaseException(
@@ -402,12 +402,12 @@ class Model extends BaseModel
      *
      * @return array<string,string>
      */
-    protected function doErrors()
+    protected function doErrors(): array
     {
         // $error is always ['code' => string|int, 'message' => string]
         $error = $this->db->error();
 
-        if ((int) $error['code'] === 0) {
+        if ((int)$error['code'] === 0) {
             return [];
         }
 
@@ -441,7 +441,7 @@ class Model extends BaseModel
             return $data->{$this->primaryKey};
         }
 
-        if (is_array($data) && ! empty($data[$this->primaryKey])) {
+        if (is_array($data) && !empty($data[$this->primaryKey])) {
             return $data[$this->primaryKey];
         }
 
@@ -458,14 +458,14 @@ class Model extends BaseModel
      */
     public function chunk(int $size, Closure $userFunc)
     {
-        $total  = $this->builder()->countAllResults(false);
+        $total = $this->builder()->countAllResults(false);
         $offset = 0;
 
         while ($offset <= $total) {
             $builder = clone $this->builder();
-            $rows    = $builder->get($size, $offset);
+            $rows = $builder->get($size, $offset);
 
-            if (! $rows) {
+            if (!$rows) {
                 throw DataException::forEmptyDataset('chunk');
             }
 
@@ -488,7 +488,7 @@ class Model extends BaseModel
     /**
      * Override countAllResults to account for soft deleted accounts.
      *
-     * @return mixed
+     * @return int|string
      */
     public function countAllResults(bool $reset = true, bool $test = false)
     {
@@ -509,11 +509,11 @@ class Model extends BaseModel
     /**
      * Provides a shared instance of the Query Builder.
      *
-     * @throws BaseException
+     * @param string|null $table
      *
      * @return BaseBuilder
      */
-    public function builder(?string $table = null)
+    public function builder(?string $table = null): BaseBuilder
     {
         // Check for an existing Builder
         if ($this->builder instanceof BaseBuilder) {
@@ -529,13 +529,13 @@ class Model extends BaseModel
         // so we don't have overly convoluted code,
         // and future features are likely to require them.
         if (empty($this->primaryKey)) {
-            throw BaseException::forNoPrimaryKey(static::class);
+            throw ModelException::forNoPrimaryKey(static::class);
         }
 
         $table = empty($table) ? $this->table : $table;
 
         // Ensure we have a good db connection
-        if (! $this->db instanceof BaseConnection) {
+        if (!$this->db instanceof BaseConnection) {
             $this->db = Database::connect($this->DBGroup);
         }
 
@@ -560,7 +560,7 @@ class Model extends BaseModel
      *
      * @return $this
      */
-    public function set($key, $value = '', ?bool $escape = null)
+    public function set($key, $value = '', ?bool $escape = null): self
     {
         $data = is_array($key) ? $key : [$key => $value];
 
@@ -601,13 +601,13 @@ class Model extends BaseModel
      * @param array|object|null $data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
+     * @return bool|int|string|null
      * @throws ReflectionException
      *
-     * @return BaseResult|false|int|object|string
      */
     public function insert($data = null, bool $returnID = true)
     {
-        if (! empty($this->tempData['data'])) {
+        if (!empty($this->tempData['data'])) {
             if (empty($data)) {
                 $data = $this->tempData['data'] ?? null;
             } else {
@@ -616,7 +616,7 @@ class Model extends BaseModel
             }
         }
 
-        $this->escape   = $this->tempData['escape'] ?? [];
+        $this->escape = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
         return parent::insert($data, $returnID);
@@ -633,7 +633,7 @@ class Model extends BaseModel
      */
     public function update($id = null, $data = null): bool
     {
-        if (! empty($this->tempData['data'])) {
+        if (!empty($this->tempData['data'])) {
             if (empty($data)) {
                 $data = $this->tempData['data'] ?? null;
             } else {
@@ -642,7 +642,7 @@ class Model extends BaseModel
             }
         }
 
-        $this->escape   = $this->tempData['escape'] ?? [];
+        $this->escape = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
         return parent::update($id, $data);
@@ -655,9 +655,9 @@ class Model extends BaseModel
      * @param object|string $data
      * @param bool          $recursive If true, inner entities will be casted as array as well
      *
+     * @return array|null Array
      * @throws ReflectionException
      *
-     * @return array|null Array
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {
@@ -665,8 +665,8 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey}))
+            method_exists($data, 'toRawArray') && (!empty($properties) && !empty($this->primaryKey) && !in_array($this->primaryKey, $properties, true)
+                && !empty($data->{$this->primaryKey}))
         ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }
@@ -717,7 +717,7 @@ class Model extends BaseModel
     public function __call(string $name, array $params)
     {
         $builder = $this->builder();
-        $result  = null;
+        $result = null;
 
         if (method_exists($this->db, $name)) {
             $result = $this->db->{$name}(...$params);
@@ -740,25 +740,27 @@ class Model extends BaseModel
      *
      * @param object|string $data
      * @param string|null   $primaryKey
+     * @param string        $dateFormat
+     * @param bool          $onlyChanged
      *
-     * @throws ReflectionException
-     *
+     * @return array
+     * @throws \ReflectionException
      * @codeCoverageIgnore
      *
      * @deprecated since 4.1
      */
-    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
+    public static function classToArray($data, ?string $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
     {
         if (method_exists($data, 'toRawArray')) {
             $properties = $data->toRawArray($onlyChanged);
 
             // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
+            if (!empty($properties) && !empty($primaryKey) && !in_array($primaryKey, $properties, true) && !empty($data->{$primaryKey})) {
                 $properties[$primaryKey] = $data->{$primaryKey};
             }
         } else {
             $mirror = new ReflectionClass($data);
-            $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+            $props = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
             $properties = [];
 
@@ -789,7 +791,7 @@ class Model extends BaseModel
                             break;
 
                         default:
-                            $converted = (string) $value;
+                            $converted = (string)$value;
                     }
 
                     $properties[$key] = $converted;
