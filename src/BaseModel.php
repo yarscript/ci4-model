@@ -12,10 +12,10 @@
 namespace Yarscript\Ciloquent;
 
 use Closure;
-use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\DataException;
+use Yarscript\Ciloquent\Database\BaseConnection;
+use Yarscript\Ciloquent\Database\BaseResult;
+use Yarscript\Ciloquent\Database\Exceptions\DatabaseException;
+use Yarscript\Ciloquent\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
