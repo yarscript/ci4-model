@@ -1,12 +1,7 @@
 <?php
 
 /**
- * This file is part of CodeIgniter 4 framework.
- *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
- *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * This file is part of Ciloquent component.
  */
 
 namespace Yarscript\Ciloquent\Database;
@@ -35,11 +30,12 @@ class Database
      * Parses the connection binds and returns an instance of the driver
      * ready to go.
      *
-     * @throws InvalidArgumentException
+     * @param array  $params
+     * @param string $alias
      *
-     * @return mixed
+     * @return object
      */
-    public function load(array $params = [], string $alias = '')
+    public function load(array $params = [], string $alias = ''): object
     {
         if ($alias === '') {
             throw new InvalidArgumentException('You must supply the parameter: alias.');
@@ -130,7 +126,7 @@ class Database
         $class = $driver . '\\' . $class;
 
         if (strpos($driver, '\\') === false) {
-            $class = "CodeIgniter\\Database\\{$class}";
+            $class = "CodeIgniter\\Database\\$class";
         }
 
         return new $class($argument);
